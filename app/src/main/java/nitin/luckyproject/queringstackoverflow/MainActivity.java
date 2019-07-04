@@ -9,9 +9,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.util.List;
 
 public class MainActivity extends Activity implements View.OnClickListener {
 
@@ -38,13 +41,22 @@ public class MainActivity extends Activity implements View.OnClickListener {
         });
 
 
+
+        List<Questions> questions =FakeDataProvider.getQuestions();
+        ArrayAdapter<Questions> arrayAdapter = new ArrayAdapter<Questions>(MainActivity.this,R.layout.support_simple_spinner_dropdown_item,questions);
+        questionSpinner.setAdapter(arrayAdapter);
+
+
         authenticateButton = findViewById(R.id.authenticate_button);
         recyclerView = findViewById(R.id.list);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
-
+        List<Answer> answers = FakeDataProvider.getAnswers();
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(answers);
+        recyclerView.setAdapter(adapter);
     }
+
 
     @Override
     public void onClick(View view) {
